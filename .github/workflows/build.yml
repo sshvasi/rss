@@ -1,4 +1,4 @@
-name: node
+name: build
 on: push
 jobs:
   build:
