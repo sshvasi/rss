@@ -1,117 +1,126 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RSS Агрегатор</title>
+    <title>RSS Reader</title>
   </head>
-  <body class="d-flex flex-column min-vh-100">
-    <div
-      class="modal fade"
-      id="modal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="modal"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button
-              type="button"
-              class="btn-close close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+  <body>
+    <div class="page d-flex flex-column min-vh-100">
+      <header class="pt-5 pb-4 bg-dark text-light">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+              <h1 class="display-3">RSS Reader</h1>
+              <form
+                class="rss-form feed-form"
+                action="#"
+                method="GET"
+                autocomplete="off"
+              >
+                <div class="row g-2">
+                  <div class="col-sm col-12">
+                    <label for="add-rss" class="visually-hidden"
+                      >RSS link</label
+                    >
+                    <input
+                      type="text"
+                      class="rss-input form-control form-control-lg"
+                      name="add-rss"
+                      id="add-rss"
+                      placeholder="Link"
+                      aria-label="url"
+                      autofocus
+                    />
+                  </div>
+                  <div class="col-sm-auto col-12">
+                    <button
+                      class="rss-add btn btn-success btn-lg w-100"
+                      type="submit"
+                      aria-label="add"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <p class="text-secondary my-2">
+                Example: https://lifehacker.com/rss
+              </p>
+              <p class="message-container fade my-1"></p>
+            </div>
           </div>
-          <div class="modal-body text-break"></div>
-          <div class="modal-footer">
-            <a
-              class="btn btn-primary full-article"
-              href="https://frontend-rss-reader-ru.hexlet.app/#"
-              role="button"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Читать полностью </a
-            ><button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
+        </div>
+      </header>
+
+      <main class="main flex-grow-1 py-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+              <div class="row mb-4">
+                <div class="rss-feeds col feeds">
+                  <h2>Feeds</h2>
+                  <p>So far, there are no feeds here</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="rss-posts col posts"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer border-top py-3 mt-5 bg-light">
+        <div class="container-xl">
+          <div class="text-center">
+            Created by
+            <a href="https://github.com/sshvasi" target="_blank"
+              >Vasiliev Alexander</a
             >
-              Закрыть
-            </button>
+          </div>
+        </div>
+      </footer>
+      <div
+        class="modal fade"
+        id="postPreviewModal"
+        tabindex="-1"
+        aria-labelledby="postPreviewModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header align-items-start">
+              <h5
+                class="rss-modal-title modal-title"
+                id="postPreviewModalLabel"
+              >
+                Header
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="rss-modal-body modal-body">Content</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="rss-modal-close btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <a href="" class="rss-modal-more btn btn-success" target="_blank"
+                >Read more</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <main class="flex-grow-1">
-      <section class="container-fluid bg-dark p-5">
-        <div class="row">
-          <div class="col-md-10 col-lg-8 mx-auto text-white">
-            <h1 class="display-3 mb-0">RSS агрегатор</h1>
-            <p class="lead">
-              Начните читать RSS сегодня! Это легко, это красиво.
-            </p>
-            <form
-              action="https://frontend-rss-reader-ru.hexlet.app/"
-              class="rss-form text-body"
-            >
-              <div class="row">
-                <div class="col">
-                  <div class="form-floating">
-                    <input
-                      id="url-input"
-                      autofocus=""
-                      required=""
-                      name="rss-input"
-                      aria-label="url"
-                      class="rss-input form-control w-100"
-                      placeholder="ссылка RSS"
-                      autocomplete="off"
-                    />
-                    <label for="url-input">Ссылка RSS</label>
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <button
-                    type="submit"
-                    aria-label="add"
-                    class="rss-submit h-100 btn btn-lg btn-primary px-sm-5"
-                  >
-                    Добавить
-                  </button>
-                </div>
-              </div>
-            </form>
-            <p class="mt-2 mb-0 text-muted">
-              Пример: https://ru.hexlet.io/lessons.rss
-            </p>
-            <p class="feedback m-0 position-absolute small text-danger"></p>
-          </div>
-        </div>
-      </section>
-      <section class="container-fluid container-xxl p-5">
-        <div class="row">
-          <div class="col-md-10 col-lg-8 order-1 mx-auto posts"></div>
-          <div
-            class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds"
-          ></div>
-        </div>
-      </section>
-    </main>
-    <footer class="footer border-top py-3 mt-5 bg-light">
-      <div class="container-xl">
-        <div class="text-center">
-          created by
-          <a
-            href="https://github.com/sshvasi/fullstack-javascript-project-11"
-            target="_blank"
-            >Alexander Vasiliev</a
-          >
-        </div>
-      </div>
-    </footer>
   </body>
 </html>

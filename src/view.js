@@ -1,7 +1,10 @@
 import onChange from 'on-change';
+import processStates from './constants.js';
 
-const render = (elements) => (path, state) => {
+const render = (state, elements, i18nextInstance) => (path) => {
   const { input, submitButton } = elements.feedForm;
+
+  submitButton.textContent = i18nextInstance.t('buttons.addFeed');
 
   if (path !== 'form.processState') {
     return;
@@ -13,7 +16,7 @@ const render = (elements) => (path, state) => {
     input.classList.add('is-invalid');
   }
 
-  if (state.form.processState === 'sending') {
+  if (state.form.processState === processStates.sending) {
     input.readOnly = true;
     submitButton.disabled = true;
   } else {
@@ -21,16 +24,17 @@ const render = (elements) => (path, state) => {
     submitButton.disabled = false;
   }
 
-  if (state.form.processState === 'filling') {
+  if (state.form.processState === processStates.initial) {
     input.focus();
   }
 
-  if (state.form.processState === 'finished') {
+  if (state.form.processState === processStates.finished) {
     input.value = '';
     input.focus();
   }
 };
 
-const initView = (state, elements) => onChange(state, (path) => render(elements)(path, state));
+const initView = (state, elements, i18nextInstance) =>
+  onChange(state, render(state, elements, i18nextInstance));
 
 export default initView;

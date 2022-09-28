@@ -1,17 +1,23 @@
+import * as yup from 'yup';
+import i18next from 'i18next';
+import resources from './locales/index.js';
 import initView from './view.js';
+import processStates from './constants.js';
 import validate from './validate.js';
 
-const app = () => {
+const app = async () => {
+  const defaultLanguage = 'en';
+
   const initialState = {
     rssUrls: [],
     feeds: [],
     posts: [],
     processStateError: null,
-    processState: 'filling',
+    processState: processStates.initial,
     form: {
       valid: true,
       processStateError: null,
-      processState: 'filling',
+      processState: processStates.initial,
     },
     uiState: {
       viewedPostsIds: [],
@@ -27,7 +33,16 @@ const app = () => {
     },
   };
 
-  const state = initView(initialState, elements);
+  const i18nextInstance = i18next.createInstance();
+
+  yup.setLocale(resources.yup);
+
+  await i18nextInstance.init({
+    lng: defaultLanguage,
+    resources: { en: resources.en },
+  });
+
+  const state = initView(initialState, elements, i18nextInstance);
 
   elements.feedForm.form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -36,16 +51,16 @@ const app = () => {
     const rssUrl = formData.get('rss-input');
 
     state.processStateError = null;
-    state.processState = 'filling';
+    state.processState = processStates.initial;
     state.form.valid = true;
-    state.form.processState = 'sending';
+    state.form.processState = processStates.sending;
     state.form.processStateError = null;
 
     const validationError = validate(rssUrl, state.rssUrls);
 
     if (validationError) {
       state.form.valid = false;
-      state.form.processState = 'failed';
+      state.form.processState = processStates.failed;
       state.form.processStateError = validationError.message;
     }
 
