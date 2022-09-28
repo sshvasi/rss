@@ -1,23 +1,26 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import url from 'url';
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-module.exports = {
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.js',
+  entry: {
+    main: './src/index.js',
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   devServer: {
     static: path.resolve(__dirname, 'dist'),
     port: 8080,
     hot: true,
     open: true,
-    overlay: {
-      warnings: true,
-      errors: true,
-    },
   },
   module: {
     rules: [
@@ -30,7 +33,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: () => [require('autoprefixer')],
+                plugins: () => [import('autoprefixer')],
               },
             },
           },
@@ -41,7 +44,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './src/index.html',
     }),
     new MiniCssExtractPlugin(),
   ],
