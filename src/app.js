@@ -29,7 +29,18 @@ const app = async () => {
     feedForm: {
       form: document.querySelector('.rss-form'),
       input: document.querySelector('.rss-input'),
-      submitButton: document.querySelector('.rss-submit'),
+      submitButton: document.querySelector('.rss-add'),
+    },
+    containers: {
+      messages: document.querySelector('.rss-messages'),
+      feeds: document.querySelector('.rss-feeds'),
+      posts: document.querySelector('.rss-posts'),
+    },
+    postPreviewModal: {
+      title: document.querySelector('.rss-modal-title'),
+      body: document.querySelector('.rss-modal-body'),
+      closeButton: document.querySelector('.rss-modal-close'),
+      readMoreLink: document.querySelector('.rss-modal-more'),
     },
   };
 
