@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/sshvasi/fullstack-javascript-project-11/workflows/hexlet-check/badge.svg)](https://github.com/sshvasi/fullstack-javascript-project-11/actions)",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "webpack",
     "start": "webpack serve --mode development",
@@ -28,7 +29,9 @@
     "@popperjs/core": "^2.11.6",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "on-change": "^4.0.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
