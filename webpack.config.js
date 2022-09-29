@@ -3,8 +3,8 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const filename = url.fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default {
   mode: process.env.NODE_ENV || 'development',
@@ -13,11 +13,11 @@ export default {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(dirname, 'dist'),
     clean: true,
   },
   devServer: {
-    static: path.resolve(__dirname, 'dist'),
+    static: path.resolve(dirname, 'dist'),
     port: 8080,
     hot: true,
     open: true,
