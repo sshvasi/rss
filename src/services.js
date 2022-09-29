@@ -39,15 +39,18 @@ const loadPosts = async (state) => {
 
 const listenForNewPosts = async (state) => {
   const timeoutMs = 5000;
-  const posts = await loadPosts(state);
-  const uniquePosts = differenceWith(
-    posts,
-    state.posts,
-    (newPost, oldPost) => newPost.title === oldPost.title,
-  );
-  if (isEmpty(uniquePosts)) return;
-  state.posts = [...uniquePosts, ...state.posts];
-  setTimeout(() => listenForNewPosts(state), timeoutMs);
+  try {
+    const posts = await loadPosts(state);
+    const uniquePosts = differenceWith(
+      posts,
+      state.posts,
+      (newPost, oldPost) => newPost.title === oldPost.title,
+    );
+    if (isEmpty(uniquePosts)) return;
+    state.posts = [...uniquePosts, ...state.posts];
+  } finally {
+    setTimeout(() => listenForNewPosts(state), timeoutMs);
+  }
 };
 
 const fetchRss = async (url, state) => {
