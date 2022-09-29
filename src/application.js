@@ -56,7 +56,6 @@ const app = async () => {
   const state = initView(initialState, elements, i18nextInstance);
 
   elements.containers.posts.addEventListener('click', (event) => {
-    event.preventDefault();
     const previewPostId = event.target.dataset.postId;
     if (!previewPostId) return;
     state.uiState.previewPostId = previewPostId;
