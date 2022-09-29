@@ -1,9 +1,10 @@
 import * as yup from 'yup';
 import i18next from 'i18next';
-import resources from './locales/index.js';
 import initView from './view.js';
+import { listenForNewPosts, fetchRss } from './services.js';
+import validate from './validator.js';
 import processStates from './constants.js';
-import validate from './validate.js';
+import resources from './locales/index.js';
 
 const app = async () => {
   const defaultLanguage = 'en';
@@ -45,9 +46,7 @@ const app = async () => {
   };
 
   const i18nextInstance = i18next.createInstance();
-
   yup.setLocale(resources.yup);
-
   await i18nextInstance.init({
     lng: defaultLanguage,
     resources: { en: resources.en },
@@ -57,28 +56,22 @@ const app = async () => {
 
   elements.feedForm.form.addEventListener('submit', (event) => {
     event.preventDefault();
-
     const formData = new FormData(event.target);
-    const rssUrl = formData.get('rss-input');
-
+    const rssUrl = formData.get('add-rss');
     state.processStateError = null;
     state.processState = processStates.initial;
     state.form.valid = true;
     state.form.processState = processStates.sending;
     state.form.processStateError = null;
-
     const validationError = validate(rssUrl, state.rssUrls);
-
     if (validationError) {
       state.form.valid = false;
       state.form.processState = processStates.failed;
       state.form.processStateError = validationError.message;
     }
-
-    // fetchRss(rssUrl, state);
+    fetchRss(rssUrl, state);
   });
-
-  // listenToNewPosts(state);
+  listenForNewPosts(state);
 };
 
 export default app;
