@@ -1,7 +1,7 @@
-name: build
+name: lint
 on: push
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,11 +15,4 @@ jobs:
       - run: npm ci
         env:
           CI: true
-      - run: npm test
       - run: npm run lint
-      - uses: paambaati/codeclimate-action@v2.7.4
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: npm run test-coverage
-          debug: true
