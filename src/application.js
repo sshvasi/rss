@@ -7,7 +7,7 @@ import processStates from './constants.js';
 import resources from './locales/index.js';
 
 const app = async () => {
-  const defaultLanguage = 'en';
+  const defaultLanguage = 'ru';
 
   const initialState = {
     rssUrls: [],
@@ -50,7 +50,7 @@ const app = async () => {
   const i18nextInstance = i18next.createInstance();
   await i18nextInstance.init({
     lng: defaultLanguage,
-    resources: { en: resources.en },
+    resources: { ru: resources.ru },
   });
 
   const state = initView(initialState, elements, i18nextInstance);
