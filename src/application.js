@@ -21,7 +21,7 @@ const app = async () => {
       processState: processStates.initial,
     },
     uiState: {
-      viewedPostsIds: [],
+      viewedPostsIds: new Set(),
       previewPostId: null,
     },
   };
