@@ -9,11 +9,8 @@ const createPostItem = (post, viewedPosts, i18nextInstance) => {
 
   const link = document.createElement('a');
 
-  const linkFontWeights = viewedPosts.has(post.id)
-    ? ['fw-normal', 'font-weight-normal']
-    : ['fw-bold', 'font-weight-bold'];
-
-  link.classList.add(...linkFontWeights);
+  const linkFontWeight = viewedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
+  link.classList.add(linkFontWeight);
   link.setAttribute('target', '_blank');
   link.href = post.link;
   link.textContent = post.title;
