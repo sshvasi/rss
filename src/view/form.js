@@ -1,14 +1,9 @@
-import onChange from 'on-change';
-import processStates from './constants.js';
+import processStates from '../constants.js';
 
-const render = (state, elements, i18nextInstance) => (path) => {
-  const { input, submitButton } = elements.feedForm;
+const renderForm = (state, formElements, i18nextInstance) => {
+  const { input, submitButton } = formElements;
 
   submitButton.textContent = i18nextInstance.t('buttons.addFeed');
-
-  if (path !== 'form.processState') {
-    return;
-  }
 
   if (state.form.valid) {
     input.classList.remove('is-invalid');
@@ -34,7 +29,4 @@ const render = (state, elements, i18nextInstance) => (path) => {
   }
 };
 
-const initView = (state, elements, i18nextInstance) =>
-  onChange(state, render(state, elements, i18nextInstance));
-
-export default initView;
+export default renderForm;

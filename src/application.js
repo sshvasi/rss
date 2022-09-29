@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import i18next from 'i18next';
-import initView from './view.js';
+import initView from './view/index.js';
 import { listenForNewPosts, fetchRss } from './services.js';
 import validate from './validator.js';
 import processStates from './constants.js';
