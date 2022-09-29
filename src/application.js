@@ -69,13 +69,14 @@ const app = async () => {
     state.processStateError = null;
     state.processState = processStates.initial;
     state.form.valid = true;
-    state.form.processState = processStates.sending;
     state.form.processStateError = null;
-    const validationError = validate(rssUrl, state.rssUrls);
-    if (validationError) {
+    state.form.processState = processStates.sending;
+    const validateError = validate(rssUrl, state.rssUrls);
+    if (validateError) {
       state.form.valid = false;
+      state.form.processStateError = validateError.message;
       state.form.processState = processStates.failed;
-      state.form.processStateError = validationError.message;
+      return;
     }
     fetchRss(rssUrl, state);
   });
