@@ -45,14 +45,23 @@ const app = async () => {
     },
   };
 
-  const i18nextInstance = i18next.createInstance();
   yup.setLocale(resources.yup);
+
+  const i18nextInstance = i18next.createInstance();
   await i18nextInstance.init({
     lng: defaultLanguage,
     resources: { en: resources.en },
   });
 
   const state = initView(initialState, elements, i18nextInstance);
+
+  elements.containers.posts.addEventListener('click', (event) => {
+    event.preventDefault();
+    const previewPostId = event.target.dataset.postId;
+    if (!previewPostId) return;
+    state.uiState.previewPostId = previewPostId;
+    state.uiState.viewedPostsIds = state.uiState.viewedPostsIds.add(previewPostId);
+  });
 
   elements.feedForm.form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -71,6 +80,7 @@ const app = async () => {
     }
     fetchRss(rssUrl, state);
   });
+
   listenForNewPosts(state);
 };
 
