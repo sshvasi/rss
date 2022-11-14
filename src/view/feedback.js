@@ -1,4 +1,4 @@
-import processStates from '../constants.js';
+import processStates from '../utils/constants.js';
 
 const renderFeedback = (state, elements, i18nextInstance) => {
   const { messages } = elements.containers;

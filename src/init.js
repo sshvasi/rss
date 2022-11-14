@@ -1,12 +1,12 @@
 import * as yup from 'yup';
 import i18next from 'i18next';
 import initView from './view/index.js';
-import { listenForNewPosts, fetchRss } from './services.js';
-import validate from './validator.js';
-import processStates from './constants.js';
+import { listenForNewPosts, fetchRss } from './utils/services.js';
+import validate from './utils/validator.js';
+import processStates from './utils/constants.js';
 import resources from './locales/index.js';
 
-const app = async () => {
+const init = async () => {
   const initialState = {
     rssUrls: [],
     feeds: [],
@@ -48,6 +48,7 @@ const app = async () => {
   yup.setLocale(resources.yup);
 
   const i18nextInstance = i18next.createInstance();
+
   await i18nextInstance.init({
     lng: defaultLanguage,
     resources: { en: resources.en },
@@ -57,32 +58,40 @@ const app = async () => {
 
   elements.containers.posts.addEventListener('click', (event) => {
     const previewPostId = event.target.dataset.postId;
-    if (!previewPostId) return;
+
+    if (!previewPostId) {
+      return;
+    }
+
     state.uiState.previewPostId = previewPostId;
-    state.uiState.viewedPostsIds =
-      state.uiState.viewedPostsIds.add(previewPostId);
+    state.uiState.viewedPostsIds = state.uiState.viewedPostsIds.add(previewPostId);
   });
 
   elements.feedForm.form.addEventListener('submit', (event) => {
     event.preventDefault();
+
     const formData = new FormData(event.target);
     const rssUrl = formData.get('add-rss');
+
     state.processStateError = null;
     state.processState = processStates.initial;
     state.form.valid = true;
     state.form.processStateError = null;
     state.form.processState = processStates.sending;
+
     const validateError = validate(rssUrl, state.rssUrls);
+
     if (validateError) {
       state.form.valid = false;
       state.form.processStateError = validateError.message;
       state.form.processState = processStates.failed;
       return;
     }
+
     fetchRss(rssUrl, state);
   });
 
   listenForNewPosts(state);
 };
 
-export default app;
+export default init;

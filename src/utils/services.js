@@ -8,6 +8,7 @@ const getProxyUrl = (url) => {
   const proxyUrl = new URL(baseUrl);
   proxyUrl.searchParams.set('disableCache', 'true');
   proxyUrl.searchParams.set('url', url);
+
   return proxyUrl.toString();
 };
 
@@ -25,12 +26,14 @@ const normalizePosts = (posts, options = {}) => posts.map((post) => ({
 const loadFeed = async (url) => {
   const proxyUrl = getProxyUrl(url);
   const response = await axios.get(proxyUrl);
+
   return parseRss(response.data.contents);
 };
 
 const loadPosts = async (state) => {
   const feedPromises = state.rssUrls.map((url) => loadFeed(url));
   const responses = await Promise.all(feedPromises);
+
   return responses.flatMap(({ items }, index) => {
     const currentFeed = state.feeds[index];
     return normalizePosts(items, { feedId: currentFeed.id });
@@ -39,12 +42,13 @@ const loadPosts = async (state) => {
 
 const listenForNewPosts = async (state) => {
   const timeoutMs = 5000;
+
   try {
     const posts = await loadPosts(state);
     const uniquePosts = differenceWith(
       posts,
       state.posts,
-      (newPost, oldPost) => newPost.title === oldPost.title,
+      (newPost, oldPost) => newPost.title === oldPost.title
     );
     if (isEmpty(uniquePosts)) return;
     state.posts = [...uniquePosts, ...state.posts];
@@ -60,6 +64,7 @@ const fetchRss = async (url, state) => {
     const normalizedPosts = normalizePosts(items, {
       feedId: normalizedFeed.id,
     });
+
     state.processStateError = null;
     state.processState = processStates.finished;
     state.rssUrls = [url, ...state.rssUrls];

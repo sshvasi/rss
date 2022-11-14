@@ -1,4 +1,4 @@
-import processStates from '../constants.js';
+import processStates from '../utils/constants.js';
 
 const renderForm = (state, formElements, i18nextInstance) => {
   const { input, submitButton } = formElements;

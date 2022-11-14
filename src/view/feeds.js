@@ -25,13 +25,13 @@ const renderFeeds = (state, elements, i18nextInstance) => {
   if (state.feeds.length === 0) {
     const p = document.createElement('p');
     p.textContent = i18nextInstance.t('noFeeds');
+
     feeds.append(header, p);
     return;
   }
 
   const feedsList = document.createElement('ul');
   feedsList.classList.add('list-group');
-
   const feedItems = state.feeds.map(createFeedItem);
 
   feedsList.append(...feedItems);
