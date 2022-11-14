@@ -48,7 +48,7 @@ const listenForNewPosts = async (state) => {
     const uniquePosts = differenceWith(
       posts,
       state.posts,
-      (newPost, oldPost) => newPost.title === oldPost.title
+      (newPost, oldPost) => newPost.title === oldPost.title,
     );
     if (isEmpty(uniquePosts)) return;
     state.posts = [...uniquePosts, ...state.posts];
