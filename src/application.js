@@ -7,8 +7,6 @@ import processStates from './constants.js';
 import resources from './locales/index.js';
 
 const app = async () => {
-  const defaultLanguage = 'ru';
-
   const initialState = {
     rssUrls: [],
     feeds: [],
@@ -45,12 +43,14 @@ const app = async () => {
     },
   };
 
+  const defaultLanguage = 'en';
+
   yup.setLocale(resources.yup);
 
   const i18nextInstance = i18next.createInstance();
   await i18nextInstance.init({
     lng: defaultLanguage,
-    resources: { ru: resources.ru },
+    resources: { en: resources.en },
   });
 
   const state = initView(initialState, elements, i18nextInstance);
@@ -59,7 +59,8 @@ const app = async () => {
     const previewPostId = event.target.dataset.postId;
     if (!previewPostId) return;
     state.uiState.previewPostId = previewPostId;
-    state.uiState.viewedPostsIds = state.uiState.viewedPostsIds.add(previewPostId);
+    state.uiState.viewedPostsIds =
+      state.uiState.viewedPostsIds.add(previewPostId);
   });
 
   elements.feedForm.form.addEventListener('submit', (event) => {
