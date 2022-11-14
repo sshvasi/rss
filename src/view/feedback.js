@@ -19,7 +19,6 @@ const renderFeedback = (state, elements, i18nextInstance) => {
   if (state.form.processState === processStates.failed) {
     messages.textContent = i18nextInstance.t(`${state.form.processStateError}`);
     messages.classList.add('text-danger', 'show');
-    console.log(state.form.processStateError);
   }
 };
 
