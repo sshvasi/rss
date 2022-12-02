@@ -2,7 +2,6 @@ import processStates from '../utils/constants.js';
 
 const renderForm = (state, formElements, i18nextInstance) => {
   const { input, submitButton } = formElements;
-
   submitButton.textContent = i18nextInstance.t('buttons.addFeed');
 
   if (state.form.valid) {

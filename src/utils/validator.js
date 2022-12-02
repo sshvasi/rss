@@ -1,15 +1,9 @@
 import * as yup from 'yup';
 
 const validate = (value, uniqueValues) => {
-  const scheme = yup
-    .string()
-    .required()
-    .url()
-    .notOneOf(uniqueValues);
-
+  const schema = yup.string().required().url().notOneOf(uniqueValues);
   try {
-    scheme.validateSync(value);
-
+    schema.validateSync(value);
     return null;
   } catch (error) {
     return error;

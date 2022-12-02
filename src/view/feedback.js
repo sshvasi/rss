@@ -2,7 +2,6 @@ import processStates from '../utils/constants.js';
 
 const renderFeedback = (state, elements, i18nextInstance) => {
   const { messages } = elements.containers;
-
   messages.textContent = '';
   messages.classList.remove('show', 'text-danger', 'text-success');
 

@@ -1,14 +1,15 @@
 import onChange from 'on-change';
+
 import renderForm from './form.js';
 import renderFeeds from './feeds.js';
 import renderPosts from './posts.js';
 import renderFeedback from './feedback.js';
 import renderModal from './modal.js';
 
-const initView = (state, elements, i18nextInstance) => {
+export default (state, elements, i18nextInstance) => {
   const { feedForm, postPreviewModal } = elements;
 
-  const renderMapping = {
+  const slices = {
     processState: () => renderFeedback(state, elements, i18nextInstance),
     feeds: () => renderFeeds(state, elements, i18nextInstance),
     posts: () => renderPosts(state, elements, i18nextInstance),
@@ -21,8 +22,6 @@ const initView = (state, elements, i18nextInstance) => {
   };
 
   return onChange(state, (path) => {
-    renderMapping[path]?.();
+    slices[path]?.();
   });
 };
-
-export default initView;
