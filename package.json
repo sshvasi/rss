@@ -1,5 +1,5 @@
 {
-  "name": "@hexlet/code",
+  "name": "rss",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/sshvasi/fullstack-javascript-project-11/workflows/hexlet-check/badge.svg)](https://github.com/sshvasi/fullstack-javascript-project-11/actions)",
   "main": "index.js",
